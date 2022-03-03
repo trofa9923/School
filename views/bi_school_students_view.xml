@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+    <!--    School Student Form-->
+    <record model="ir.ui.view" id="bi_school_student_form_view">
+        <field name="name">bi.school.form.view</field>
+        <field name="model">bi.school.student</field>
+        <field name="arch" type="xml">
+            <form string="Students">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field required="1" name="student_no"/>
+                        </h1>
+                    </div>
+                    <group col="6">
+                        <group colspan="2">
+                            <field name="name"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+	      				<field name="message_follower_ids" widget="mail_followers"/>
+	      				<field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    School Student Tree-->
+    <record id="bi_school_student_tree_view" model="ir.ui.view">
+        <field name="name">bi.school.student.tree.view</field>
+        <field name="model">bi.school.student</field>
+        <field name="arch" type="xml">
+            <tree string="Student Tree">
+                <field name="student_no"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    School Student Search-->
+    <record id="bi_school_student_search_view" model="ir.ui.view">
+        <field name="name">bi.school.student.search.view</field>
+        <field name="model">bi.school.student</field>
+        <field name="arch" type="xml">
+            <search string="Student Filter">
+                <field name="name" string="Search Student" filter_domain="[('name','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+
+<!--    School Student Actions-->
+    <record id="bi_school_student_action" model="ir.actions.act_window">
+        <field name="name">Student</field>
+        <field name="res_model">bi.school.student</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="search_view_id" ref="bi_school_student_search_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_bi_school_student_tree">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="bi_school_student_tree_view"/>
+        <field name="act_window_id" ref="bi_school_student_action"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_bi_school_student_form">
+        <field name="view_mode">form</field>
+        <field name="sequence">2</field>
+        <field name="view_id" ref="bi_school_student_form_view"/>
+        <field name="act_window_id" ref="bi_school_student_action"/>
+    </record>
+</data>
+</odoo>

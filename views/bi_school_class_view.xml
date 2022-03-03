@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+    <!--    School Class Form-->
+    <record model="ir.ui.view" id="bi_school_class_form_view">
+        <field name="name">bi.school.class.form.view</field>
+        <field name="model">bi.school.class</field>
+        <field name="arch" type="xml">
+            <form string="Classes">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                    <button name="action_date_started" string="Start Class" class="oe_highlight" type="object"
+				        		attrs="{'invisible':[('state','!=','draft')]}"/>
+                    <button name="%(bi_school.action_bi_school_class_date_end_wizard)d"
+                                                class="oe_highlight" string="End Class" type="action"
+                                                attrs="{'invisible':[('state','!=','in_progress')]}"/>
+                    <button name="action_cancelled" string="Cancel Class" class="oe_highlight" type="object"
+				        		attrs="{'invisible':[('state','!=','in_progress')]}"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object"
+				        		attrs="{'invisible':[('state','not in',['in_progress','done'])]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1" readonly="1" attrs="{'readonly':[('state','in',['cancelled','in_progress','done'])]}"/>
+                        </h1>
+                        <h3>
+                            <field name="description" placeholder="Description..."
+                                   attrs="{'readonly':[('state','in',['cancelled','in_progress','done'])]}"/>
+                        </h3>
+                    </div>
+                    <group col="6">
+                        <group colspan="3">
+                            <field name="teacher_id" required="1" attrs="{'readonly':[('state','in',['cancelled','in_progress','done'])]}"/>
+                            <field name="schedule_ids" attrs="{'readonly':[('state','in',['cancelled','in_progress','done'])]}" widget="many2many_tags"
+                                    options="{'no_create': True}"/>
+                            <label for="time_start" string="Time"/>
+                            <div>
+                            <field name="time_start" required="1" widget="float_time" class="oe_inline"
+                                   attrs="{'readonly':[('state','in',['cancelled','in_progress','done'])]}"/>
+                                -
+                                <field name="time_end" required="1" class="oe_inline" widget="float_time"
+                                       attrs="{'readonly':[('state','in',['cancelled','in_progress','done'])]}"/>
+                            </div>
+                        </group>
+                        <group colspan="2">
+                            <field name="date_start" readonly="1"/>
+                            <field name="date_end" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                    <div>
+                    <separator string="Students"/>
+                    <field name="student_ids" context="{'tree_view_ref':'bi_school.bi_school_student_tree_view', 'form_view_ref':'bi_school.bi_school_student_form_view'}"
+                           nolabel="1" widget="many2many_list" colspan="4" attrs="{'readonly':[('state','in',['cancelled','in_progress','done'])]}"/>
+                    </div>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+	      				<field name="message_follower_ids" widget="mail_followers"/>
+	      				<field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    School Class Tree-->
+    <record id="bi_school_class_tree_view" model="ir.ui.view">
+        <field name="name">bi.school.class.tree.view</field>
+        <field name="model">bi.school.class</field>
+        <field name="arch" type="xml">
+            <tree string="Classes Tree">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="teacher_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    School Class Search-->
+    <record id="bi_school_class_search_view" model="ir.ui.view">
+        <field name="name">bi.school.class.search.view</field>
+        <field name="model">bi.school.class</field>
+        <field name="arch" type="xml">
+            <search string="Class Filter">
+                <field name="name" string="Search Class" filter_domain="[('name','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+
+<!--    School Class Actions-->
+    <record id="bi_school_class_action" model="ir.actions.act_window">
+        <field name="name">Classes</field>
+        <field name="res_model">bi.school.class</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="search_view_id" ref="bi_school_class_search_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_bi_school_class_tree">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="bi_school_class_tree_view"/>
+        <field name="act_window_id" ref="bi_school_class_action"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_bi_school_form">
+        <field name="view_mode">form</field>
+        <field name="sequence">2</field>
+        <field name="view_id" ref="tf_school_form_view"/>
+        <field name="act_window_id" ref="bi_school_class_action"/>
+    </record>
+
+    <record id="seq_bi_school_class_number" model="ir.sequence">
+        <field name="name">Class</field>
+        <field name="code">class_number</field>
+        <field name="prefix">CLASS-</field>
+        <field name="padding">5</field>
+    </record>
+</data>
+</odoo>

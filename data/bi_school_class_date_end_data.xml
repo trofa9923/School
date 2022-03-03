@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="ir_cron_bi_school_class_date_end" forcecreate="True" model="ir.cron">
+            <field name="name">School Class Date End</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="True" name="doall"/>
+            <field ref="model_tf_school" name="model_id"/>
+            <field name="code">model.update_class_end_date()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=1,second=0,minute=0) + timedelta(days=1,hours=-8)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+    </data>
+</openerp>

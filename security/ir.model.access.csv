@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bi_school_class,access.bi.school.class,bi_school.model_bi_school_class,base.group_user,1,0,0,0
+access_bi_school_student,access.bi.school.student,bi_school.model_bi_school_student,base.group_user,1,0,0,0
+access_bi_school_class_officer,access.bi.school.class.officer,bi_school.model_bi_school_class,bi_school.group_bi_school_officer,1,1,1,1
+access_bi_school_class_teacher,access.bi.school.class.teacher,bi_school.model_bi_school_class,bi_school.group_bi_school_teacher,1,1,1,1
+access_bi_school_officer,access.bi.school.student,bi_school.model_bi_school_student,bi_school.group_bi_school_officer,1,1,1,0
+access_bi_school_admin,access.bi.school.student,bi_school.model_bi_school_student,bi_school.group_bi_school_admin,1,1,1,1
+access_bi_school_teacher,access.bi.school.teacher,bi_school.model_bi_school_teacher,bi_school.group_bi_school_teacher,1,1,1,1
+access_bi_school_schedule_config_school,access.bi.school.schedule.config,bi_school.model_bi_school_schedule_config,base.group_erp_manager,1,1,1,1

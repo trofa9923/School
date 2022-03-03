@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+    <!--    School Teacher Form-->
+    <record model="ir.ui.view" id="bi_school_teacher_form_view">
+        <field name="name">bi.school.teacher.form.view</field>
+        <field name="model">bi.school.teacher</field>
+        <field name="arch" type="xml">
+            <form string="Teacher">
+                <sheet>
+                    <div class="oe_title">
+				            <h1>
+				                <field required="1" name="name"/>
+				            </h1>
+				        </div>
+                </sheet>
+                <div class="oe_chatter">
+	      				<field name="message_follower_ids" widget="mail_followers"/>
+	      				<field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    School Student Tree-->
+    <record id="bi_school_teacher_tree_view" model="ir.ui.view">
+        <field name="name">bi.school.teacher.tree.view</field>
+        <field name="model">bi.school.teacher</field>
+        <field name="arch" type="xml">
+            <tree string="Teacher Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    School Student Search-->
+    <record id="bi_school_teacher_search_view" model="ir.ui.view">
+        <field name="name">bi.school.teacher.search.view</field>
+        <field name="model">bi.school.teacher</field>
+        <field name="arch" type="xml">
+            <search string="Teacher Filter">
+                <field name="name" string="Search Teacher" filter_domain="[('name','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+
+<!--    School Student Actions-->
+    <record id="bi_school_teacher_action" model="ir.actions.act_window">
+        <field name="name">Teacher</field>
+        <field name="res_model">bi.school.teacher</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="bi_school_teacher_search_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_bi_school_teacher_tree">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="bi_school_teacher_tree_view"/>
+        <field name="act_window_id" ref="bi_school_teacher_action"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_bi_school_teacher_form">
+        <field name="view_mode">form</field>
+        <field name="sequence">2</field>
+        <field name="view_id" ref="bi_school_teacher_form_view"/>
+        <field name="act_window_id" ref="bi_school_teacher_action"/>
+    </record>
+</data>
+</odoo>
