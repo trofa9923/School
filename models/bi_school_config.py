@@ -22,13 +22,39 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 ##############################################################################
-from odoo import models, fields, api, _
-from odoo.modules.module import get_module_resource
+from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
-class BISchoolTeacher(models.Model):
-    _name = "bi.school.teacher"
-    _description = "School Teachers"
+
+class SchoolScheduleConfig(models.Model):
+    _name = "bi.school.sched.config"
+    _description = "Schedule Configuration"
     _inherit = ['mail.thread']
 
-    name = fields.Char('Name')
+    SCHEDULE = [('monday', 'Monday'),
+                ('tuesday', 'Tuesday'),
+                ('wednesday', 'Wednesday'),
+                ('thursday', 'Thursday'),
+                ('friday', 'Friday'),
+                ('saturday', 'Saturday'),
+                ('sunday', 'Sunday')]
+
+    name = fields.Selection(SCHEDULE, track_visibility="onchange")
+
+
+class SchoolYearLevelConfig(models.Model):
+    _name = "bi.school.year_level.config"
+    _description = "Year Level Configuration"
+    _inherit = ['mail.thread']
+
+    name = fields.Char(string="Year Name", track_visibility="onchange")
+
+
+class SchoolSubjectsConfig(models.Model):
+    _name = "bi.school.subject.config"
+    _description = "Subject Configuration"
+    _inherit = ['mail.thread']
+
+    name = fields.Char(string="Subject Name", track_visibility="onchange")
+    year_level_id = fields.Many2one('bi.school.year_level.config', string="Year Level", track_visibility='onchange')
+

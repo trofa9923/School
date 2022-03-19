@@ -9,7 +9,7 @@
             <field name="interval_type">days</field>
             <field name="numbercall">-1</field>
             <field eval="True" name="doall"/>
-            <field ref="model_tf_school" name="model_id"/>
+            <field ref="model_bi_school_class" name="model_id"/>
             <field name="code">model.update_class_end_date()</field>
             <field name="nextcall"
                    eval="(DateTime.now().replace(hour=1,second=0,minute=0) + timedelta(days=1,hours=-8)).strftime('%Y-%m-%d %H:%M:%S')"/>

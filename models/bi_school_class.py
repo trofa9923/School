@@ -26,6 +26,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
+
 class BISchoolClass(models.Model):
     _name = "bi.school.class"
     _description = "School Classes"
@@ -36,13 +37,12 @@ class BISchoolClass(models.Model):
              ('in_progress', 'In Progress'),
              ('done', 'Done')]
 
-
     name = fields.Char(string='Name', track_visibility="onchange", copy=False,
                    index=True, default=lambda self: _('New'))
     description = fields.Char('Description', track_visibility="onchange")
     state = fields.Selection(STATE, string='State', default='draft', track_visibility="onchange", copy=False)
     teacher_id = fields.Many2one('bi.school.teacher', string="Teacher", track_visibility="onchange")
-    schedule_ids = fields.Many2many('bi.school.schedule.config', track_visibility="onchange")
+    schedule_ids = fields.Many2many('bi.school.sched.config', track_visibility="onchange")
     time_start = fields.Float('Time Start', track_visibility="onchange")
     time_end = fields.Float('Time End', track_visibility="onchange")
     date_start = fields.Date('Date Started', track_visibility="onchange")

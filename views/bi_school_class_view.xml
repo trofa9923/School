@@ -108,7 +108,7 @@
     <record model="ir.actions.act_window.view" id="act_bi_school_form">
         <field name="view_mode">form</field>
         <field name="sequence">2</field>
-        <field name="view_id" ref="tf_school_form_view"/>
+        <field name="view_id" ref="bi_school_class_form_view"/>
         <field name="act_window_id" ref="bi_school_class_action"/>
     </record>
 

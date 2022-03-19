@@ -22,23 +22,35 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 ##############################################################################
-{
-    'name': 'School - PH',
-    'version': '13.0.1.0',
-    'depends': ['mail'],
-    'author': 'BI',
-    'website': '',
-    'category': 'School',
-    'data': ['security/bi_school_group_security.xml',
-             'security/ir.model.access.csv',
-             # 'data/bi_school_class_date_end_data.xml',
-             'data/bi_school_schedule_data.xml',
-             'wizard/bi_school_class_date_wizard_view.xml',
-             'views/bi_school_class_view.xml',
-             'views/bi_school_students_view.xml',
-             'views/bi_school_teacher_view.xml',
-             'views/bi_school_config_view.xml',
-             'views/bi_school_menu.xml'
-             ],
-    'auto_install': False,
-}
+import pytz
+
+from odoo import models, fields
+
+_tzs = [(tz, tz) for tz in sorted(pytz.all_timezones, key=lambda tz: tz if not tz.startswith('Etc/') else '_')]
+
+
+def _tz_get(self):
+    return _tzs
+
+
+_FORMATS = [
+    ('format1', 'FirstName MI. LastName'),
+    ('format2', 'FirstName MiddleName LastName'),
+    ('format3', 'LastName, FirstName MiddleName'),
+    ('format4', 'LastName, FirstName MI.'),
+    ('user_defined', 'User-Defined')
+]
+
+
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
+
+    name_format = fields.Selection(_FORMATS, 'Name Format', related='company_id.name_format', readonly=False)
+    tz = fields.Selection(_tz_get, string='Timezone', related='company_id.tz', default='Asia/Manila', readonly=False)
+
+
+class ResCompany(models.Model):
+    _inherit = 'res.company'
+
+    name_format = fields.Selection(_FORMATS, 'Name Format', default='user_defined')
+    tz = fields.Selection(_tz_get, string='Timezone', default='Asia/Manila')

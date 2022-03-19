@@ -7,18 +7,98 @@
         <field name="model">bi.school.student</field>
         <field name="arch" type="xml">
             <form string="Students">
+                <field name="active" invisible="1"/>
                 <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{&quot;zoom&quot;: true, &quot;preview_image&quot;:&quot;image_128&quot;}"/>
                     <div class="oe_title">
                         <h1>
-                            <field required="1" name="student_no"/>
+                            <field name="name" placeholder="Student's Name" required="True"/>
                         </h1>
+                        <h2>
+                            <field name="year_level_id"/>
+                        </h2>
                     </div>
-                    <group col="6">
-                        <group colspan="2">
-                            <field name="name"/>
-                            <field name="user_id"/>
+                    <group>
+                        <group>
+                            <field name="year_level_id"/>
+                            <field name="adviser_id"/>
+                        </group>
+                        <group>
+                            <field name="adviser_id"/>
                         </group>
                     </group>
+                    <group>
+                        <group colspan="4">
+                            <label for="name" string="Full Name"/>
+                            <div>
+                                <span style="margin-right: 5px">
+                                    <field name="first_name" required="1" placeholder="First Name"
+                                           class="oe_inline" attrs="{'readonly':[('active','=',False)]}"/>
+                                </span>
+                                <span style="margin-right: 5px">
+                                    <field name="middle_name" placeholder="Middle Name" class="oe_inline"
+                                           attrs="{'readonly':[('active','=',False)]}"/>
+                                </span>
+                                <span style="margin-right: 5px">
+                                    <field name="last_name" required="1" placeholder="Last Name"
+                                       class="oe_inline" attrs="{'readonly':[('active','=',False)]}"/>
+                                </span>
+                                <span style="margin-right: 5px">
+                                    <field name="suffix_name" required="1" placeholder="Suffix Name(e.g Jr, II, III)"
+                                       class="oe_inline" attrs="{'readonly':[('active','=',False)]}"/>
+                                </span>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="personal_information" string="Private Information" groups="bi_school.group_bi_school_teacher,bi_school.group_bi_school_officer">
+                            <group>
+                                <group string="Private Contact">
+                                    <label for="home_street" string="Home Address"/>
+                                    <div class="o_address_format">
+                                        <field name="home_street"
+                                            placeholder="Street..."
+                                            class="o_address_street" attrs="{'readonly':[('active','=',False)]}"/>
+                                        <field name="home_street2"
+                                            placeholder="Street 2..."
+                                            class="o_address_street" attrs="{'readonly':[('active','=',False)]}"/>
+                                        <field name="home_city"
+                                            placeholder="City" class="o_address_city" attrs="{'readonly':[('active','=',False)]}"/>
+                                        <field name="home_state_id"
+                                            class="o_address_state"
+                                            placeholder="State"
+                                            options="{'no_open': True}"
+                                            context="{'country_id': country_id, 'zip': home_zip}" attrs="{'readonly':[('active','=',False)]}"/>
+                                        <field name="home_zip"
+                                            placeholder="ZIP" class="o_address_zip" attrs="{'readonly':[('active','=',False)]}"/>
+                                    </div>
+                                    <field name="home_phone" attrs="{'readonly':[('active','=',False)]}" widget="phone"/>
+                                    <field name="mobile_phone" attrs="{'readonly':[('active','=',False)]}" widget="phone"/>
+                                    <field name="personal_email" widget="email"/>
+                                </group>
+                                <group string="Citizenship">
+                                    <field name="country_id" options='{"no_open": True, "no_create": True}'/>
+                                    <field name="gender"/>
+                                    <field name="birthday"/>
+                                    <field name="place_of_birth"/>
+                                    <field name="country_of_birth"/>
+                                </group>
+                                <group string="Emergency">
+                                    <field name="emergency_contact"/>
+                                    <field name="emergency_phone" class="o_force_ltr"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="admin_settings" string="Admin Settings" groups="bi_school.group_bi_school_admin">
+                            <group>
+                                <group string="User">
+                                    <field name="user_id" />
+                                </group>
+                            </group>
+                        </page>
+
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
 	      				<field name="message_follower_ids" widget="mail_followers"/>

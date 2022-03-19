@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="bi_school_class_date_end_wizard_view" model="ir.ui.view">
+            <field name="name">End Class Date</field>
+            <field name="model">bi.school.class.date_end.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Confirm Class Date End">
+                    <group col="1">
+                        <group colspan="3">
+                            <field name="date_end" style="width:200px;"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_date" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_bi_school_class_date_end_wizard" model="ir.actions.act_window">
+            <field name="name">End Class Date</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bi.school.class.date_end.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bi_school_class_date_end_wizard_view"/>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+
+    </data>
+</odoo>

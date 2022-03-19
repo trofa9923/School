@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
 <openerp>
     <data noupdate="1">
-        <record id="monday_schedule" model="res.config.school">
+        <record id="monday_schedule" model="bi.school.sched.config">
             <field name="name">monday</field>
         </record>
-        <record id="tuesday_schedule" model="res.config.school">
+        <record id="tuesday_schedule" model="bi.school.sched.config">
             <field name="name">tuesday</field>
         </record>
-        <record id="wednesday_schedule" model="res.config.school">
+        <record id="wednesday_schedule" model="bi.school.sched.config">
             <field name="name">wednesday</field>
         </record>
-        <record id="thursday_schedule" model="res.config.school">
+        <record id="thursday_schedule" model="bi.school.sched.config">
             <field name="name">thursday</field>
         </record>
-        <record id="friday_schedule" model="res.config.school">
+        <record id="friday_schedule" model="bi.school.sched.config">
             <field name="name">friday</field>
         </record>
-        <record id="saturday_schedule" model="res.config.school">
+        <record id="saturday_schedule" model="bi.school.sched.config">
             <field name="name">saturday</field>
         </record>
-        <record id="sunday_schedule" model="res.config.school">
+        <record id="sunday_schedule" model="bi.school.sched.config">
             <field name="name">sunday</field>
         </record>
     </data>

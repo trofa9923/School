@@ -23,4 +23,4 @@
 #
 ##############################################################################
 
-from . import tf_school_class_date_wizard
+from . import bi_school_class_date_wizard

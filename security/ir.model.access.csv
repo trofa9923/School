@@ -5,5 +5,7 @@ access_bi_school_class_officer,access.bi.school.class.officer,bi_school.model_bi
 access_bi_school_class_teacher,access.bi.school.class.teacher,bi_school.model_bi_school_class,bi_school.group_bi_school_teacher,1,1,1,1
 access_bi_school_officer,access.bi.school.student,bi_school.model_bi_school_student,bi_school.group_bi_school_officer,1,1,1,0
 access_bi_school_admin,access.bi.school.student,bi_school.model_bi_school_student,bi_school.group_bi_school_admin,1,1,1,1
-access_bi_school_teacher,access.bi.school.teacher,bi_school.model_bi_school_teacher,bi_school.group_bi_school_teacher,1,1,1,1
-access_bi_school_schedule_config_school,access.bi.school.schedule.config,bi_school.model_bi_school_schedule_config,base.group_erp_manager,1,1,1,1
+access_bi_school_teacher,access.bi.school.teacher,bi_school.model_bi_school_teacher,bi_school.group_bi_school_teacher,1,1,1,0
+access_bi_school_teach_admin,access.bi.school.teacher.admin,bi_school.model_bi_school_teacher,bi_school.group_bi_school_admin,1,1,1,1
+access_bi_school_sched_config_school,access.bi.school.sched.config,bi_school.model_bi_school_sched_config,base.group_erp_manager,1,1,1,1
+access_bi_school_year_level_config_school,access.bi.school.year_level.config,bi_school.model_bi_school_year_level_config,base.group_erp_manager,1,1,1,1

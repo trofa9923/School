@@ -22,23 +22,28 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 ##############################################################################
-{
-    'name': 'School - PH',
-    'version': '13.0.1.0',
-    'depends': ['mail'],
-    'author': 'BI',
-    'website': '',
-    'category': 'School',
-    'data': ['security/bi_school_group_security.xml',
-             'security/ir.model.access.csv',
-             # 'data/bi_school_class_date_end_data.xml',
-             'data/bi_school_schedule_data.xml',
-             'wizard/bi_school_class_date_wizard_view.xml',
-             'views/bi_school_class_view.xml',
-             'views/bi_school_students_view.xml',
-             'views/bi_school_teacher_view.xml',
-             'views/bi_school_config_view.xml',
-             'views/bi_school_menu.xml'
-             ],
-    'auto_install': False,
-}
+from odoo import api, models, fields
+from odoo.exceptions import ValidationError
+
+
+class DateEnded(models.TransientModel):
+    _name = 'bi.school.class.date_end.wizard'
+
+    date_end = fields.Date('Date End')
+
+    def action_date(self):
+        item = self.env['bi.school.class'].browse(self._context.get('active_ids', [])) # To check the active_ids
+        if self.date_end == fields.Date.context_today(self):
+            vals = {
+                'date_end': self.date_end,
+                'state': 'done'
+            }
+            res = item.write(vals)
+            return res
+        else:
+            vals = {
+                'date_end': self.date_end
+            }
+            res = item.write(vals)
+            return res
+
