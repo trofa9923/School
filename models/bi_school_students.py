@@ -23,10 +23,12 @@
 #
 ##############################################################################
 import base64
+from datetime import date
 
 from odoo import models, fields, api, _
 from odoo.modules.module import get_module_resource
 from odoo.exceptions import ValidationError
+
 
 class BISchoolStudent(models.Model):
     _name = "bi.school.student"
@@ -35,7 +37,14 @@ class BISchoolStudent(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     _sql_constraints = [
-        ('student_no_uniq', 'unique(student_no)', "Student Number already exists !"),
+        ('student_no_uniq', 'unique(student_no)', "Student ID Number already exists !"),
+    ]
+
+    _STATE = [
+        ('application', "Application"),
+        ('active', "Active"),
+        ('graduate', "Graduated"),
+        ('dropout', "Dropout")
     ]
 
     @api.model
@@ -43,12 +52,11 @@ class BISchoolStudent(models.Model):
         image_path = get_module_resource('hr', 'static/src/img', 'default_image.png')
         return base64.b64encode(open(image_path, 'rb').read())
 
-    student_no = fields.Char('Student No.')
-    name = fields.Char('Name')
+    student_no = fields.Char('Student ID No.')
+    name = fields.Char('Name', compute="_compute_name", store=True)
     last_name = fields.Char('Last Name', track_visibility='onchange', index=True)
     first_name = fields.Char('First Name', track_visibility='onchange', index=True)
     middle_name = fields.Char('Middle Name', track_visibility='onchange', index=True)
-    suffix_name = fields.Char('Suffix Name', track_visibility='onchange', index=True)
     home_street = fields.Char('Home Street', track_visibility='onchange')
     home_street2 = fields.Char('Home Street 2', track_visibility='onchange')
     home_city = fields.Char('Home City', track_visibility='onchange')
@@ -62,8 +70,7 @@ class BISchoolStudent(models.Model):
         'res.country', 'Nationality (Country)')
     gender = fields.Selection([
         ('male', 'Male'),
-        ('female', 'Female'),
-        ('other', 'Other')
+        ('female', 'Female')
     ], default="male", tracking=True)
     place_of_birth = fields.Char('Place of Birth')
     country_of_birth = fields.Many2one('res.country', string="Country of Birth")
@@ -78,14 +85,48 @@ class BISchoolStudent(models.Model):
     year_level_id = fields.Many2one('bi.school.year_level.config', string="Year Level", track_visibility='onchange')
     section = fields.Char()
     image_1920 = fields.Image(default=_default_image)
+    school_id = fields.Many2one('bi.school', "School", track_visibility='onchange')
     active = fields.Boolean(default=True)
 
-    @api.onchange('last_name', 'first_name', 'middle_name', 'name')
-    def _onchange_employee_name(self):
+    @api.depends('last_name', 'first_name', 'middle_name')
+    def _compute_name(self):
         for rec in self:
-            last_name = rec.last_name.strip() if rec.last_name else ''
-            first_name = rec.first_name.strip() + ' ' if rec.first_name else ''
-            middle_name = rec.middle_name.strip() + ' ' if rec.middle_name else ''
-            rec.name = first_name + middle_name + last_name
+            rec.name = "%s, %s %s" % (rec.last_name, rec.first_name, rec.middle_name)
+
+    @api.depends('birthday')
+    def _get_age(self):
+        today = date.today()
+        for rec in self:
+            born = fields.Date.from_string(rec.birthday)
+            if born:
+                rec.age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+            else:
+                rec.age = 0.0
+
+    def action_application(self):
+        self.write({'state': 'application'})
+
+    def action_activate(self):
+        sequence_obj = self.env['ir.sequence'].sudo()
+        for rec in self:
+            if not rec.id_number:
+                rec.write({
+                    'state': 'active',
+                    'id_number': sequence_obj.next_by_code('tf.school')
+                })
+            else:
+                rec.state = 'active'
+
+    def action_graduate(self):
+        self.write({'state': 'graduate', 'date_graduation': fields.Date.today()})
+
+    def action_dropout(self):
+        self.write({'state': 'dropout'})
+
+    def unlink(self):
+        if self.filtered(lambda student_id: student_id.state != 'application'):
+            raise ValidationError('You may not delete a previously enrolled student.')
+        return super(BISchoolStudent, self).unlink()
+
 
 

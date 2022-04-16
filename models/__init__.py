@@ -24,4 +24,4 @@
 #
 ##############################################################################
 
-from . import bi_school_config, bi_school_class, bi_school_students, bi_school_teacher
+from . import bi_school_config, bi_school, bi_school_class, bi_school_students, bi_school_teacher

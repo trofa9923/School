@@ -25,7 +25,7 @@
                             <field name="adviser_id"/>
                         </group>
                         <group>
-                            <field name="adviser_id"/>
+                            <field name="adviser_subject_id"/>
                         </group>
                     </group>
                     <group>
@@ -42,10 +42,6 @@
                                 </span>
                                 <span style="margin-right: 5px">
                                     <field name="last_name" required="1" placeholder="Last Name"
-                                       class="oe_inline" attrs="{'readonly':[('active','=',False)]}"/>
-                                </span>
-                                <span style="margin-right: 5px">
-                                    <field name="suffix_name" required="1" placeholder="Suffix Name(e.g Jr, II, III)"
                                        class="oe_inline" attrs="{'readonly':[('active','=',False)]}"/>
                                 </span>
                             </div>
