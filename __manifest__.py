@@ -34,6 +34,7 @@
              # 'data/bi_school_class_date_end_data.xml',
              'data/bi_school_schedule_data.xml',
              'wizard/bi_school_class_date_wizard_view.xml',
+             'views/bi_school_attendance_view.xml'
              'views/bi_school_view.xml',
              'views/bi_school_class_view.xml',
              'views/bi_school_students_view.xml',

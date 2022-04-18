@@ -58,11 +58,25 @@
                 sequence="3"/>
 
 		<menuitem
+			id="bi_school_attendance_menu"
+			name="Manage Attendances"
+			parent="bi_school_mainmenu"
+			groups="bi_school.group_bi_school_officer,bi_school.group_bi_school_teacher"
+			sequence="5"/>
+
+			<menuitem
+                id="menu_bi_school_attendance"
+                name="Attendance"
+				action="bi_school_attendance_action"
+                parent="bi_school_teacher_menu"
+                sequence="1"/>
+
+		<menuitem
 			id="bi_school_config_root"
 			name="Configuration"
 			parent="bi_school_mainmenu"
 			groups="bi_school.group_bi_school_officer"
-			sequence="5"/>
+			sequence="6"/>
 
 			<menuitem
                 id="bi_school_sched_config_menu"

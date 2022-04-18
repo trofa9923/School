@@ -3,7 +3,6 @@
 #
 # Copyright (c) 2022
 #
-#
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsibility of assessing all potential
 # consequences resulting from its eventual inadequacies and bugs
@@ -24,4 +23,14 @@
 #
 ##############################################################################
 
-from . import bi_school_config, bi_school, bi_school_class, bi_school_students, bi_school_teacher, bi_school_atendance
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
+
+
+class BISchoolAttendance(models.Model):
+    _name = "bi.school.attendance"
+    _description = "School Attendance"
+    _inherit = ['mail.thread']
+
+    name = fields.Char('Name')
+    user_type = fields.Char('Type of user')
